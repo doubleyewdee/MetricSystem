@@ -26,6 +26,7 @@ namespace MetricSystem.Data.UnitTests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
 
     using Microsoft.IO;
 
@@ -156,11 +157,13 @@ namespace MetricSystem.Data.UnitTests
 
         [TestCase(@"TestData\legacy_histogram.msdata")]
         [TestCase(@"TestData\legacy_hitcount.msdata")]
-        public void CanReadLegacyDataAndRewriteInNewFormat(string originalFileName)
+        public void CanReadLegacyDataAndRewriteInNewFormat(string originalFilename)
         {
             var tempFile = Path.GetTempFileName();
 
-            using (var sourceStream = new FileStream(originalFileName, FileMode.Open, FileAccess.Read))
+            var testDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var sourceFile = Path.Combine(testDir, originalFilename);
+            using (var sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read))
             using (var sourceReader = new PersistedDataReader(sourceStream, this.streamManager))
             using (var destStream = new FileStream(tempFile, FileMode.Open, FileAccess.Write))
             {
@@ -186,7 +189,7 @@ namespace MetricSystem.Data.UnitTests
                 }
             }
 
-            this.VerifyMatchingContents(originalFileName, tempFile);
+            this.VerifyMatchingContents(sourceFile, tempFile);
             File.Delete(tempFile);
         }
 

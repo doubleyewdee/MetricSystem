@@ -58,7 +58,7 @@ namespace MetricSystem.Client.UnitTests
             Assert.IsFalse(counterQuery.QueryParameters.ContainsKey("percentile"));
 
             // user context should have been filled in as a guid
-            Assert.IsNotNullOrEmpty(counterQuery.UserContext);
+            Assert.IsFalse(string.IsNullOrEmpty(counterQuery.UserContext));
         }
 
         [Test]

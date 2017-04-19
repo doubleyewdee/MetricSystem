@@ -293,7 +293,7 @@ namespace MetricSystem.Utilities.UnitTests
                 runner.ScheduleNonBlocking(delayedIncrement);
             }
             Assert.IsTrue(value < iterations);
-            Assert.IsTrue(runner.Join(TimeSpan.FromMilliseconds(1000)));
+            Assert.IsTrue(runner.Join(TimeSpan.FromMilliseconds(-1)));
             Assert.AreEqual(iterations, value);
         }
     }

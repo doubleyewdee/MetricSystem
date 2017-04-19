@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.props" Condition="Exists('..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.props')" />
+  <Import Project="..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.props" Condition="Exists('..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <ProjectGuid>{50866D67-A886-44B6-B82F-C63C2A515CC2}</ProjectGuid>
@@ -34,28 +34,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bond, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bond.Runtime.CSharp.3.0.7\lib\net45\Bond.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Bond.Core.CSharp.5.3.0\lib\net45\Bond.dll</HintPath>
     </Reference>
     <Reference Include="Bond.Attributes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bond.Runtime.CSharp.3.0.7\lib\net45\Bond.Attributes.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Bond.Core.CSharp.5.3.0\lib\net45\Bond.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="Bond.IO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bond.Runtime.CSharp.3.0.7\lib\net45\Bond.IO.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Bond.Core.CSharp.5.3.0\lib\net45\Bond.IO.dll</HintPath>
     </Reference>
     <Reference Include="Bond.JSON, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bond.Runtime.CSharp.3.0.7\lib\net45\Bond.JSON.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Bond.Runtime.CSharp.5.3.0\lib\net45\Bond.JSON.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.1.1.0.0\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Bond.Reflection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Bond.Core.CSharp.5.3.0\lib\net45\Bond.Reflection.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.1\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -109,6 +106,7 @@
     <Compile Include="QuerySpecification.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -130,8 +128,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.props'))" />
-    <Error Condition="!Exists('..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.props'))" />
+    <Error Condition="!Exists('..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.targets'))" />
   </Target>
-  <Import Project="..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.targets" Condition="Exists('..\..\packages\Bond.CSharp.3.0.7\build\Bond.CSharp.targets')" />
+  <Import Project="..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.targets" Condition="Exists('..\..\packages\Bond.CSharp.5.3.0\build\Bond.CSharp.targets')" />
 </Project>

@@ -368,7 +368,7 @@ namespace MetricSystem.Data.UnitTests
             return data;
         }
 
-        [Ignore, Category("QTestSkip")]
+        [Ignore(reason: "benchmarking test, should maybe be moved."), Category("QTestSkip")]
         [Test]
         public void Benchmark()
         {

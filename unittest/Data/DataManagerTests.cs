@@ -79,16 +79,15 @@ namespace MetricSystem.Data.UnitTests
         [Test]
         public void CreateHitCounterWithNullOrEmptyNameThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(async () => await this.dataManager.CreateHitCounter(null, AnyKeys));
-            Assert.Throws<ArgumentException>(async () => await this.dataManager.CreateHitCounter(string.Empty, AnyKeys));
-            Assert.Throws<ArgumentException>(async () => await this.dataManager.CreateHitCounter("  ", AnyKeys));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter(null, AnyKeys));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter(string.Empty, AnyKeys));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter("  ", AnyKeys));
         }
 
         [Test]
         public void CreateHitCounterWithNullKeySetThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(async () =>
-                                                 await this.dataManager.CreateHitCounter(AnyCounterName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.dataManager.CreateHitCounter(AnyCounterName, null));
         }
 
         [Test]
@@ -100,27 +99,9 @@ namespace MetricSystem.Data.UnitTests
         [Test]
         public void CreateHitCounterWithNullOrEmptyDimensionsThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(async () =>
-                                             await
-                                             this.dataManager.CreateHitCounter(AnyCounterName,
-                                                                               new DimensionSet(new HashSet<Dimension>
-                                                                                                {
-                                                                                                    null
-                                                                                                })));
-            Assert.Throws<ArgumentException>(async () =>
-                                             await
-                                             this.dataManager.CreateHitCounter(AnyCounterName,
-                                                                               new DimensionSet(new HashSet<Dimension>
-                                                                                                {new Dimension(" ")})));
-            Assert.Throws<ArgumentException>(async () =>
-                                             await this.dataManager.CreateHitCounter(AnyCounterName,
-                                                                                     new DimensionSet(new HashSet
-                                                                                                          <Dimension>
-                                                                                                      {
-                                                                                                          new Dimension(
-                                                                                                              string
-                                                                                                                  .Empty)
-                                                                                                      })));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter(AnyCounterName, new DimensionSet(new HashSet<Dimension> { null })));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter(AnyCounterName, new DimensionSet(new HashSet<Dimension> {new Dimension(" ")})));
+            Assert.ThrowsAsync<ArgumentException>(() => this.dataManager.CreateHitCounter(AnyCounterName, new DimensionSet(new HashSet <Dimension> { new Dimension( string .Empty) })));
         }
 
         [Test]
@@ -142,31 +123,13 @@ namespace MetricSystem.Data.UnitTests
         }
 
         [Test]
-        public void CreatingDuplicateCountersThrowsInvalidOperationException()
+        public async Task CreatingDuplicateCountersThrowsInvalidOperationException()
         {
             const string anyCounterName = "/anyCounter";
 
-            Assert.Throws<InvalidOperationException>(async () =>
-                                                     {
-                                                         await this.dataManager.CreateHitCounter(anyCounterName, AnyKeys);
-                                                         await this.dataManager.CreateHitCounter(anyCounterName, AnyKeys);
-                                                     });
-
-            Assert.Throws<InvalidOperationException>(async () =>
-                                                     {
-                                                         await this.dataManager.CreateHitCounter(anyCounterName, AnyKeys);
-                                                         await
-                                                             this.dataManager.CreateHistogramCounter(
-                                                                                                           anyCounterName,
-                                                                                                           AnyKeys);
-                                                     });
-            Assert.Throws<InvalidOperationException>(async () =>
-                                                     {
-                                                         await this.dataManager.CreateHistogramCounter(anyCounterName,
-                                                                                                      AnyKeys);
-                                                         await this.dataManager.CreateHistogramCounter(anyCounterName,
-                                                                                                      AnyKeys);
-                                                     });
+            await this.dataManager.CreateHitCounter(anyCounterName, AnyKeys);
+            Assert.ThrowsAsync<InvalidOperationException>(() => this.dataManager.CreateHitCounter(anyCounterName, AnyKeys));
+            Assert.ThrowsAsync<InvalidOperationException>(() => this.dataManager.CreateHistogramCounter(anyCounterName, AnyKeys));
         }
 
         [Test]

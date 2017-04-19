@@ -41,29 +41,20 @@ namespace MetricSystem.Client.UnitTests
         [Test]
         public void ClientVerifiesArguments()
         {
-            Assert.Throws<ArgumentException>(async () =>
-                                             await this.client.CounterQuery(null, new TieredRequest()));
-            Assert.Throws<ArgumentException>(async () =>
-                                             await this.client.CounterQuery(string.Empty, new TieredRequest()));
-            Assert.Throws<ArgumentNullException>(async () =>
-                                                 await this.client.CounterQuery("/Tacos", (ServerInfo)null));
-            Assert.Throws<ArgumentNullException>(async () =>
-                                                 await this.client.CounterQuery("/Tacos", (TieredRequest)null));
+            Assert.ThrowsAsync<ArgumentException>(() => this.client.CounterQuery(null, new TieredRequest()));
+            Assert.ThrowsAsync<ArgumentException>(() => this.client.CounterQuery(string.Empty, new TieredRequest()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.client.CounterQuery("/Tacos", (ServerInfo)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.client.CounterQuery("/Tacos", (TieredRequest)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.client.BatchQuery(null));
 
-            Assert.Throws<ArgumentNullException>(async () => await this.client.BatchQuery(null));
-
-            Assert.Throws<ArgumentException>(async () =>
-                                             await this.client.CounterInfoQuery(null, new TieredRequest()));
-            Assert.Throws<ArgumentException>(async () =>
-                                             await this.client.CounterInfoQuery(string.Empty, new TieredRequest()));
-            Assert.Throws<ArgumentNullException>(async () =>
-                                                 await this.client.CounterInfoQuery("/Tacos", (ServerInfo)null));
-            Assert.Throws<ArgumentNullException>(async () =>
-                                                 await this.client.CounterInfoQuery("/Tacos", (TieredRequest)null));
+            Assert.ThrowsAsync<ArgumentException>(() => this.client.CounterInfoQuery(null, new TieredRequest()));
+            Assert.ThrowsAsync<ArgumentException>(() => this.client.CounterInfoQuery(string.Empty, new TieredRequest()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.client.CounterInfoQuery("/Tacos", (ServerInfo)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => this.client.CounterInfoQuery("/Tacos", (TieredRequest)null));
         }
 
         [Test]
-        public async void ClientGeneratesCorrectQueryUri()
+        public async Task ClientGeneratesCorrectQueryUri()
         {
             const string expectedUri = "http://a:1/counters/AnyCounter/query";
             var passed = false;
@@ -87,7 +78,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ClientGeneratesCorrectDetailsUri()
+        public async Task ClientGeneratesCorrectDetailsUri()
         {
             const string expectedUri = "http://a:1/counters/AnyCounter/info?dimension=tacos";
             var passed = false;
@@ -115,7 +106,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ClientRequestsDataFromEachMachineExactlyOnce()
+        public async Task ClientRequestsDataFromEachMachineExactlyOnce()
         {
             var request = new TieredRequest
             {
@@ -157,7 +148,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ServerTimesOut()
+        public async Task ServerTimesOut()
         {
             // emulate canceled as an OperationCanceledException
             DistributedQueryClient.RequesterFactory = new MockHttpRequesterFactory(_ => { throw new WebException("", WebExceptionStatus.Timeout); });
@@ -178,7 +169,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ServerReturnsErrorCode()
+        public async Task ServerReturnsErrorCode()
         {
             // emulate a failure response
             DistributedQueryClient.RequesterFactory = new MockHttpRequesterFactory(_ => new HttpResponseMessage(HttpStatusCode.PaymentRequired) {Content = new StringContent("Pay up")});
@@ -200,7 +191,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ServerReturnsErrorCodeWithDiagnostics()
+        public async Task ServerReturnsErrorCodeWithDiagnostics()
         {
             const HttpStatusCode expectedStatusCode = HttpStatusCode.PaymentRequired;
             const RequestStatus expectedOtherResponse = RequestStatus.RequestException;
@@ -226,7 +217,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void ServerConnectionFails()
+        public async Task ServerConnectionFails()
         {
             DistributedQueryClient.RequesterFactory = new MockHttpRequesterFactory(_ => { throw new WebException("", WebExceptionStatus.ConnectionClosed); });
 
@@ -246,7 +237,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void InvalidDataReturned()
+        public async Task InvalidDataReturned()
         {
             DistributedQueryClient.RequesterFactory = new MockHttpRequesterFactory(_ => new HttpResponseMessage(HttpStatusCode.OK)
                                                                                         {
@@ -276,11 +267,11 @@ namespace MetricSystem.Client.UnitTests
             const int maxFanout = 2;
             const int totalMachinesToQuery = 10;
 
-            Assert.Throws<TypeUnloadedException>(async () => await this.client.CounterQuery("/something", CreateRequest(totalMachinesToQuery, maxFanout), null));
+            Assert.ThrowsAsync<TypeUnloadedException>(() => this.client.CounterQuery("/something", CreateRequest(totalMachinesToQuery, maxFanout), null));
         }
 
         [Test]
-        public async void DataIsMergedProperly()
+        public async Task DataIsMergedProperly()
         {
             var nfcChampionship = new DateTime(2015, 01, 18);
             const int numSampleBuckets = 10;
@@ -304,7 +295,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void DistributedQueryClientStripsPercentileOutOfQueryParameter()
+        public async Task DistributedQueryClientStripsPercentileOutOfQueryParameter()
         {
             bool didTestPass = false;
 
@@ -326,7 +317,7 @@ namespace MetricSystem.Client.UnitTests
         }
 
         [Test]
-        public async void MixedStatusAndFailureResponses()
+        public async Task MixedStatusAndFailureResponses()
         {
             var nfcChampionship = new DateTime(2015, 01, 18);
             const int numSampleBuckets = 10;

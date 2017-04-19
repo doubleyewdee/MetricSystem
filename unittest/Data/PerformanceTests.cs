@@ -75,7 +75,7 @@ namespace MetricSystem.Data.UnitTests
             public Action<TCounter, DateTime, DimensionSpecification, long> Writer;
         }
 
-        [Ignore, Category("QTestSkip")]
+        [Ignore(reason: "benchmarking test, should maybe be moved."), Category("QTestSkip")]
         [Test]
         public async Task OneMinuteHeavyLoad()
         {

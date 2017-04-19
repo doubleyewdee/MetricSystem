@@ -185,7 +185,7 @@ namespace MetricSystem.Server.UnitTests
         }
 
         [Test]
-        public async void BatchQueryAggregatesFanoutCorrectly()
+        public async Task BatchQueryAggregatesFanoutCorrectly()
         {
             const string tacoTruck = "/Tacos";
             const string competingBurritoTruck = "/Burritos";
